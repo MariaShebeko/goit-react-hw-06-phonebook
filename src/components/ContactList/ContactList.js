@@ -1,11 +1,14 @@
-import { connect } from 'react-redux';
-import todosActions from '../../redux/contacts/contacts-actions';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { getVisibleContacts } from '../../redux/contacts/contacts-selectors';
 import s from './ContactList.module.css';
 import Icon from '../Icon/Icon';
 import contactsActions from '../../redux/contacts/contacts-actions';
 
-const ContactList = ({ contacts, onDeleteContact }) => {
+const ContactList = () => {
+  const contacts = useSelector(getVisibleContacts);
+  const dispatch = useDispatch();
+  const onDeleteContact = id => dispatch(contactsActions.deleteContact(id));
+
   return (
     <ul className={s.list}>
       <p className={s.total}>Total amount of contacts: {contacts.length}</p>
@@ -35,19 +38,4 @@ const ContactList = ({ contacts, onDeleteContact }) => {
   );
 };
 
-const getVisibleContacts = (allContacts, filter) => {
-  const normalizedFilter = filter.toLowerCase();
-  return allContacts.filter(contact =>
-    contact.name.toLowerCase().includes(normalizedFilter),
-  );
-};
-
-const mapStateToProps = ({ contacts: { items, filter } }) => ({
-  contacts: getVisibleContacts(items, filter),
-});
-
-const mapDispatchToProps = dispatch => ({
-  onDeleteContact: id => dispatch(contactsActions.deleteContact(id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
+export default ContactList;
