@@ -22,8 +22,4 @@ const Filter = () => {
   );
 };
 
-// const mapDispatchToProps = dispatch => ({
-//   onChange: event => dispatch(contactsActions.changeFilter(event.target.value)),
-// });
-
 export default Filter;

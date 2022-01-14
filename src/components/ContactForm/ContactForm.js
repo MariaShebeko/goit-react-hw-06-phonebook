@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import contactsActions from '../../redux/contacts/contacts-actions';
 import s from './ContactForm.module.css';
 import Icon from '../Icon/Icon';
-import PropTypes from 'prop-types';
 
 export default function ContactForm() {
   const [name, setName] = useState('');
