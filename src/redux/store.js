@@ -22,7 +22,7 @@ const rootReducer = combineReducers({ contacts: contactsReducer });
 
 const persistedReducer = persistReducer(contactsPersistConfig, rootReducer);
 
-const store = configureStore({
+export const store = configureStore({
   reducer: persistedReducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
@@ -33,6 +33,4 @@ const store = configureStore({
   devTools: process.env.NODE_ENV === 'development',
 });
 
-const persistor = persistStore(store);
-
-export default { persistor, store };
+export const persistor = persistStore(store);

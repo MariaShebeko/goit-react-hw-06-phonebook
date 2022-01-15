@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getItems } from '../../redux/contacts/contacts-selectors';
 import contactsActions from '../../redux/contacts/contacts-actions';
+import { nanoid } from 'nanoid';
 import s from './ContactForm.module.css';
 import Icon from '../Icon/Icon';
 
 export default function ContactForm() {
+  const contacts = useSelector(getItems);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const dispatch = useDispatch();
@@ -16,7 +19,16 @@ export default function ContactForm() {
 
   const handleSubmit = event => {
     event.preventDefault();
-    dispatch(contactsActions.addContact({ name, number }));
+
+    const similarName = contacts.find(contact => contact.name === name);
+    const similarNumber = contacts.find(contact => contact.number === number);
+    if (similarName) {
+      return alert('This name is allready exist');
+    } else if (similarNumber) {
+      return alert('This number is allready exist');
+    }
+
+    dispatch(contactsActions.addContact({ id: nanoid(), name, number }));
     reset();
   };
 
