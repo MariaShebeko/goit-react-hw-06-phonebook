@@ -2,7 +2,14 @@ import { combineReducers } from 'redux';
 import { createReducer } from '@reduxjs/toolkit';
 import actions from './contacts-actions';
 
-const itemsReducer = createReducer([], {
+const initialState = {
+  contacts: {
+    items: [],
+    filter: '',
+  },
+};
+
+const itemsReducer = createReducer(initialState.contacts.items, {
   [actions.addContact]: (state, { payload }) => {
     return [...state, payload];
   },
@@ -10,7 +17,7 @@ const itemsReducer = createReducer([], {
     state.filter(contact => contact.id !== payload),
 });
 
-const filterReducer = createReducer('', {
+const filterReducer = createReducer(initialState.contacts.filter, {
   [actions.changeFilter]: (_, { payload }) => payload,
 });
 
